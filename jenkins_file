@@ -1,0 +1,18 @@
+Pipeline{
+	agent any
+	tools{
+		maven 'MVN'
+	}
+	stages{
+		stage('Pulling'){
+			steps{
+				git 'https://github.com/akhtaramir/jenkins_prac.git'
+			}
+		}
+		stage('Compile Stage'){
+			steps{
+				sh "mvn clean install"
+			}
+		}
+	}
+}
