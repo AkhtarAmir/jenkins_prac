@@ -16,8 +16,10 @@ pipeline {
 			}
 		}
 		stage('Deploying to Tomcat') {
-			sshagent(['tomcat-ec2']) {
-    				sh 'scp -o StrictHostKeyChecking=no Downloads/*.war ec2-user@172.31.27.51:/opt/tomcat9/webapps/'
+			steps {
+				sshagent(['tomcat-ec2']) {
+    					sh 'scp -o StrictHostKeyChecking=no Downloads/*.war ec2-user@172.31.27.51:/opt/tomcat9/webapps/'
+				}
 			}
 		}
 	}
