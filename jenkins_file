@@ -1,8 +1,24 @@
-node {
-	
-		stage('Deploying to Tomcat') {
-				sshagent(['tomcat-ec2']) {
-    					sh 'scp target/sample.war ec2-user@172.31.27.51:/opt/'
-				}
+pipeline {
+	agent any
+	tools{
+		maven 'MVN'
+	}
+	stages {
+		
+		stage('Pulling') {
+			steps {
+				git 'https://github.com/akhtaramir/jenkins_prac.git'
+			}
 		}
+		stage('Compile Stage') {
+			sh "${mvn}/bin/mvn package"
+		}
+		stage('Deploying to Tomcat') {
+			steps {
+				sshagent(['tomcat-ec2']) {
+    					sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.27.51:/opt/tomcat9/webapps/'
+				}
+			}
+		}
+	}
 }
