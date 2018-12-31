@@ -1,26 +1,8 @@
-pipeline {
-	agent any
-	tools{
-		maven 'MVN'
-	}
-	stages {
-		
-		stage('Pulling') {
-			steps {
-				git 'https://github.com/akhtaramir/jenkins_prac.git'
-			}
-		}
-		stage('Compile Stage') {
-			steps {
-				sh "mvn clean install"
-			}
-		}
+node {
+	
 		stage('Deploying to Tomcat') {
-			steps {
 				sshagent(['tomcat-ec2']) {
     					sh 'scp -o StrictHostKeyChecking=no target/sample.war ec2-user@172.31.27.51:/opt/'
 				}
-			}
 		}
-	}
 }
