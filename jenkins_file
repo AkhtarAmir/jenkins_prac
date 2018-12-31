@@ -11,7 +11,9 @@ pipeline {
 			}
 		}
 		stage('Compile Stage') {
-			sh "${mvn}/bin/mvn package"
+			steps{
+				sh "${mvn}/bin/mvn package"
+			}
 		}
 		stage('Deploying to Tomcat') {
 			steps {
