@@ -12,7 +12,8 @@ pipeline {
 		}
 		stage('Compile Stage') {
 			steps{
-				sh "${mvn}/bin/mvn package"
+				def mvnHome = tool name: 'MVN' , type: 'maven'
+				sh "${mvnHome}/bin/mvn package"
 			}
 		}
 		stage('Deploying to Tomcat') {
